@@ -1,6 +1,7 @@
 const path = require("path");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 // ESLint选项
 // 详见: https://webpack.docschina.org/plugins/eslint-webpack-plugin/
@@ -9,9 +10,14 @@ const ESLintOptions = {
   extensions: ["js", "ts"],
 };
 
-// HTML选项
+// HTML编译选项
 const HtmlWebpackOptions = {
   template: path.resolve(__dirname, "../public/index.html"),
+};
+
+// CSS编译选项
+const MiniCssExtractOptions = {
+  filename: "static/css/main.css",
 };
 
 module.exports = {
@@ -33,7 +39,7 @@ module.exports = {
       // less-loader 编译less为css
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader", "less-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"],
       },
       // babel-loader 兼容旧版js
       {
@@ -80,6 +86,7 @@ module.exports = {
     // plugin的配置
     new ESLintPlugin(ESLintOptions),
     new HtmlWebpackPlugin(HtmlWebpackOptions),
+    new MiniCssExtractPlugin(MiniCssExtractOptions),
   ],
   devServer: {
     host: "localhost",
