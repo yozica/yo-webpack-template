@@ -20,6 +20,16 @@ const MiniCssExtractOptions = {
   filename: "static/css/main.css",
 };
 
+// POSTCSS解决样式兼容性问题
+const PostCssLoader = {
+  loader: "postcss-loader",
+  options: {
+    postcssOptions: {
+      plugins: ["postcss-preset-env"],
+    },
+  },
+};
+
 module.exports = {
   // 入口
   entry: "./src/main.ts",
@@ -39,7 +49,12 @@ module.exports = {
       // less-loader 编译less为css
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"],
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader",
+          PostCssLoader,
+          "less-loader",
+        ],
       },
       // babel-loader 兼容旧版js
       {

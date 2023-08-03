@@ -5,6 +5,7 @@
 }
 
 .box {
+  background-clip: text;
   display: flex;
   justify-content: space-around;
   align-items: center;
