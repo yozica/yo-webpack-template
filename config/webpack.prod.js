@@ -2,6 +2,7 @@ const path = require("path");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
 // ESLint选项
 // 详见: https://webpack.docschina.org/plugins/eslint-webpack-plugin/
@@ -102,6 +103,7 @@ module.exports = {
     new ESLintPlugin(ESLintOptions),
     new HtmlWebpackPlugin(HtmlWebpackOptions),
     new MiniCssExtractPlugin(MiniCssExtractOptions),
+    new CssMinimizerPlugin(),
   ],
   devServer: {
     host: "localhost",
