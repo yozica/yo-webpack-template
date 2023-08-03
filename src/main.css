@@ -1,0 +1,28 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.box {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  width: 500px;
+  height: 500px;
+  border: 1px solid #ccc;
+
+  .left {
+    width: 200px;
+    height: 200px;
+    background-color: red;
+  }
+
+  .right {
+    width: 200px;
+    height: 200px;
+    background: url("./assets/yozica_xiangwan.jpg") center center no-repeat;
+    background-size: cover;
+  }
+}
