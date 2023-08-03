@@ -46,51 +46,60 @@ module.exports = {
   module: {
     rules: [
       // loader的配置
-
-      // less-loader 编译less为css
       {
-        test: /\.css$/i,
-        use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader",
-          PostCssLoader,
-          "less-loader",
-        ],
-      },
-      // babel-loader 兼容旧版js
-      {
-        test: /\.(?:js|ts)$/,
-        exclude: /node_modules/,
-        use: "babel-loader",
-      },
-      // ts-loader 编译ts为js
-      {
-        test: /\.tsx?$/,
-        use: "ts-loader",
-        exclude: /node_modules/,
-      },
-      // 小于10kb的图片转base64
-      // 优点: 减少请求数量。缺点: 体积会更大
-      {
-        test: /\.(png|jpe?g|gif|webp|svg)$/,
-        type: "asset",
-        parser: {
-          dataUrlCondition: {
-            maxSize: 10 * 1024,
+        oneOf: [
+          // less-loader 编译less为css
+          {
+            test: /\.css$/i,
+            use: [
+              MiniCssExtractPlugin.loader,
+              "css-loader",
+              PostCssLoader,
+              "less-loader",
+            ],
           },
-        },
-        generator: {
-          // 输出图片名称
-          filename: "static/images/[hash][ext][query]",
-        },
-      },
-      // 处理其他资源
-      {
-        test: /\.(ttf|woff2?|mp3|mp4|avi)$/,
-        type: "asset/resource",
-        generator: {
-          filename: "static/media/[hash][ext][query]",
-        },
+          // babel-loader 兼容旧版js
+          {
+            test: /\.(?:js|ts)$/,
+            exclude: /node_modules/,
+            use: {
+              loader: "babel-loader",
+              options: {
+                cacheDirectory: true, // 开启babel缓存
+                cacheCompression: false, // 关闭缓存文件压缩
+              },
+            },
+          },
+          // ts-loader 编译ts为js
+          {
+            test: /\.tsx?$/,
+            use: "ts-loader",
+            exclude: /node_modules/,
+          },
+          // 小于10kb的图片转base64
+          // 优点: 减少请求数量。缺点: 体积会更大
+          {
+            test: /\.(png|jpe?g|gif|webp|svg)$/,
+            type: "asset",
+            parser: {
+              dataUrlCondition: {
+                maxSize: 10 * 1024,
+              },
+            },
+            generator: {
+              // 输出图片名称
+              filename: "static/images/[hash][ext][query]",
+            },
+          },
+          // 处理其他资源
+          {
+            test: /\.(ttf|woff2?|mp3|mp4|avi)$/,
+            type: "asset/resource",
+            generator: {
+              filename: "static/media/[hash][ext][query]",
+            },
+          },
+        ],
       },
     ],
   },
